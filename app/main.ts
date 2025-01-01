@@ -1,5 +1,8 @@
 import * as net from "net";
 import { rootHandler } from "./handlers";
+import Logger from "./utils/logger";
+
+const PORT = 3000;
 
 const server = net.createServer((socket) => {
   socket.on("data", async (data) => {
@@ -13,6 +16,6 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(4221, "localhost", () => {
-  console.log("Server running on 4221");
+server.listen(PORT, "localhost", () => {
+  Logger.info(`Server running on port ${PORT}`);
 });
