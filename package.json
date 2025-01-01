@@ -2,9 +2,9 @@
   "name": "http_server",
   "version": "0.0.1",
   "description": "A basic HTTP server",
-  "main": "index.js",
+  "main": "app/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "bun --watch run app/main.ts"
   },
   "author": "Luke Bennellick",
   "license": "ISC"
