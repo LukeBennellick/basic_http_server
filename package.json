@@ -9,6 +9,7 @@
   "author": "Luke Bennellick",
   "license": "ISC",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node": "^22.10.3"
   }
 }
