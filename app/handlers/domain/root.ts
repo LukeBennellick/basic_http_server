@@ -1,4 +1,4 @@
-import { CRLF, HTTP_VERSION, STATUS_200 } from "../../shared/constants";
+import { CRLF, HTTP_VERSION, STATUS_200 } from "../../shared/http_constants";
 
 export const rootHandler = async (requestData = "") => {
   const body = "Root Path";
