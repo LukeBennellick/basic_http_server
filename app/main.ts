@@ -2,6 +2,7 @@ import * as net from "net";
 import { NotFound404Handler, RootHandler } from "./handlers";
 import Logger from "./utils/logger";
 import { parseVerbAndBasePathFromRequestBuffer } from "./utils/http";
+import { MethodNotAllowed405Handler } from "./handlers/errors/method_not_allowed";
 
 const PORT = 3000;
 
@@ -15,8 +16,16 @@ export type Handlers = {
 
 const handlers: Handlers = {
   "/": (verb: string, incomingData: string) => {
-    const response = RootHandler(incomingData);
-    return response;
+    switch (verb) {
+      case "GET": {
+        const response = RootHandler(incomingData);
+        return response;
+      }
+      default: {
+        const response = MethodNotAllowed405Handler(["GET"]);
+        return response;
+      }
+    }
   },
 };
 
