@@ -3,6 +3,7 @@ import { NotFound404Handler, RootHandler } from "./handlers";
 import Logger from "./utils/logger";
 import { parseVerbAndBasePathFromRequestBuffer } from "./utils/http";
 import { MethodNotAllowed405Handler } from "./handlers/errors/method_not_allowed";
+import { userAgentHandler } from "./handlers/domain/user_agent_handler";
 
 const PORT = 3000;
 
@@ -25,6 +26,17 @@ const handlers: Handlers = {
         const response = MethodNotAllowed405Handler(["GET"]);
         return response;
       }
+    }
+  },
+  "/user-agent": async (verb: string, incomingData: string) => {
+    switch (verb) {
+      case "GET": {
+        const response = userAgentHandler(incomingData);
+        return response;
+      }
+      default:
+        const response = await MethodNotAllowed405Handler(["GET"]);
+        return response;
     }
   },
 };
