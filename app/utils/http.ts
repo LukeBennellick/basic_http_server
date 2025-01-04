@@ -56,6 +56,13 @@ export const parseIncomingHeaders = (
   return headers;
 };
 
+export const parseBody = (incomingData: string): string => {
+  const lines = incomingData.split(CRLF);
+  const indexOfEmptyString = lines.findIndex((line) => line === "");
+  const indexOfBody = indexOfEmptyString + 1;
+  return lines[indexOfBody];
+};
+
 export const verifyGZIPEncoding = (incomingData: string): boolean => {
   const headers = parseIncomingHeaders(incomingData);
   const encodingAccepted = headers["accept-encoding"]?.split(", ");

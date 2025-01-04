@@ -5,8 +5,13 @@ import { parseVerbAndBasePathFromRequestBuffer } from "./utils/http";
 import { MethodNotAllowed405Handler } from "./handlers/errors/method_not_allowed";
 import { UserAgentHandler } from "./handlers/domain/user_agent";
 import { EchoHandler } from "./handlers/domain/echo";
+import { CreateFileHandler } from "./handlers/domain/files/create_file";
+import { getFileHandler } from "./handlers/domain/files/get_file";
 
 const PORT = 3000;
+const args = process.argv;
+const directoryIndex = args.indexOf("--directory");
+const FILE_DIRECTORY = args[directoryIndex + 1];
 
 export type Handlers = {
   [key: string]: (
@@ -48,6 +53,21 @@ const handlers: Handlers = {
       }
       default:
         const response = MethodNotAllowed405Handler(["GET"]);
+        return response;
+    }
+  },
+  "/files": (verb, incomingData) => {
+    switch (verb) {
+      case "GET": {
+        const response = getFileHandler(FILE_DIRECTORY, incomingData);
+        return response;
+      }
+      case "POST": {
+        const response = CreateFileHandler(FILE_DIRECTORY, incomingData);
+        return response;
+      }
+      default:
+        const response = MethodNotAllowed405Handler(["GET", "POST"]);
         return response;
     }
   },
